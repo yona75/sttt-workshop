@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.4.7
+ * Amazon FreeRTOS V1.4.6
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -42,7 +42,6 @@
 #include "task.h"
 
 /* Demo includes */
-#include "aws_demo_runner.h"
 #include "aws_system_init.h"
 #include "aws_logging_task.h"
 #include "aws_wifi.h"
@@ -77,6 +76,7 @@ const AppVersion32_t xAppFirmwareVersion =
 /*-----------------------------------------------------------*/
 
 void vApplicationDaemonTaskStartupHook( void );
+void vRunSensorDemo(void);
 
 /* Defined in es_wifi_io.c. */
 extern void SPI_WIFI_ISR(void);
@@ -100,6 +100,7 @@ static UART_HandleTypeDef xConsoleUart;
 static void SystemClock_Config( void );
 static void Console_UART_Init( void );
 static void RTC_Init( void );
+static void prvSensorsInit(void);
 static void prvWifiConnect( void );
 
 /**
@@ -178,12 +179,14 @@ void vApplicationDaemonTaskStartupHook( void )
             prvWifiConnect();
 
             #ifdef USE_OFFLOAD_SSL
-                /* Check if WiFi firmware needs to be updated. */
                 prvCheckWiFiFirmwareVersion();
             #endif /* USE_OFFLOAD_SSL */
 
-            /* Start demos. */
-            DEMO_RUNNER_RunDemos();
+            /* Initialize onboard sensors */
+            prvSensorsInit();
+		
+		    /* Start sensor demo task */
+            vRunSensorDemo();
         }
     }
     else
@@ -483,6 +486,45 @@ static void RTC_Init( void )
     {
         Error_Handler();
     }
+}
+/*-----------------------------------------------------------*/
+
+/**
+  * @brief  Initialize onboard sensors
+  * @param  none
+  * @retval none
+  */
+static void prvSensorsInit(void)
+{
+  if (HSENSOR_OK != BSP_HSENSOR_Init())
+  {
+    Error_Handler();
+  }
+
+  if (TSENSOR_OK != BSP_TSENSOR_Init())
+  {
+    Error_Handler();
+  }
+
+  if (PSENSOR_OK != BSP_PSENSOR_Init())
+  {
+    Error_Handler();
+  }
+
+  if (MAGNETO_OK != BSP_MAGNETO_Init())
+  {
+    Error_Handler();
+  }
+
+  if (GYRO_OK != BSP_GYRO_Init())
+  {
+    Error_Handler();
+  }
+
+  if (ACCELERO_OK != BSP_ACCELERO_Init())
+  {
+    Error_Handler();
+  }
 }
 /*-----------------------------------------------------------*/
 

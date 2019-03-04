@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.4.7
+ * Amazon FreeRTOS V1.4.6
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,28 +23,10 @@
  * http://www.FreeRTOS.org
  */
 
-/* Called from all the example projects to start tasks that demonstrate Amazon
- * FreeRTOS libraries.
- *
- * If the project was created using the AWS console then this file will have been
- * auto generated and only reference and start the demos that were selected in the
- * console.  If the project was obtained from a source control repository then this
- * file will reference all the available and the developer can selectively comment
- * in or out the demos to execute. */
-
-
 #include "aws_demo_runner.h"
 
 /* Demo declarations. */
-/* extern void vStartDeviceDefenderDemo( void ); */
-/* extern void vStartGreenGrassDiscoveryTask( void ); */
 extern void vStartMQTTEchoDemo( void );
-/* extern void vStartOTAUpdateDemoTask( void ); */
-/* extern void vStartShadowDemoTasks( void ); */
-/* extern void vStartSimpleTCPServerTasks( void ); */
-/* extern void vStartSubpubDemoTasks( void ); */
-/* extern void vStartTCPEchoClientTasks_SeparateTasks( void ); */
-/* extern void vStartTCPEchoClientTasks_SingleTasks( void ); */
 
 /*-----------------------------------------------------------*/
 
@@ -53,13 +35,5 @@ extern void vStartMQTTEchoDemo( void );
  */
 void DEMO_RUNNER_RunDemos( void )
 {
-    /* vStartDeviceDefenderDemo(); */
-    /* vStartGreenGrassDiscoveryTask(); */
     vStartMQTTEchoDemo();
-    /* vStartOTAUpdateDemoTask(); */
-    /* vStartShadowDemoTasks(); */
-    /* vStartSimpleTCPServerTasks(); */
-    /* vStartSubpubDemoTasks(); */
-    /* vStartTCPEchoClientTasks_SeparateTasks(); */
-    /* vStartTCPEchoClientTasks_SingleTasks(); */
 }
